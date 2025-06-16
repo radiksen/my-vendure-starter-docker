@@ -1,0 +1,36 @@
+# Use a Node.js LTS image based on Debian
+FROM node:20
+
+# Install necessary system dependencies, including openssl (for crypto module robustness)
+# git and unzip might be useful for future development/debugging, so keep them.
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    openssl \
+    git \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json first to leverage Docker cache
+COPY package.json ./
+COPY package-lock.json ./
+
+# Install project dependencies
+RUN npm install
+
+# Install the PostgreSQL client driver for Node.js
+RUN npm install pg --save
+
+# Copy the rest of the Vendure project files
+COPY . .
+
+# Build the Vendure project (TypeScript to JavaScript)
+RUN npm run build
+
+# Expose the port Vendure API runs on
+EXPOSE 3000
+
+# Default command to run Vendure API
+CMD ["node", "dist/index.js"]

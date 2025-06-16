@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  vendure:
+    build:
+      context: ./docker/vendure # The context is the folder containing Dockerfile.vendure
+      dockerfile: Dockerfile.vendure
+    image: radiksen/vendure:latest # Name for your custom Vendure image
+    container_name: vendure_app
+    environment:
+      # These environment variables will be picked up by vendure-config.ts via process.env
+      DB_TYPE: postgres
+      DB_HOST: db               # Service name for the database
+      DB_PORT: 5432
+      DB_USERNAME: vendure      # Username for the database (match with vendure-config.ts)
+      DB_PASSWORD: ${VENDURE_DB_PASSWORD} # Comes from the .env file
+      DB_DATABASE: vendure      # Database name (match with vendure-config.ts)
+      SUPERADMIN_USERNAME: superadmin@vendure.io # Default superadmin email for initial setup
+      SUPERADMIN_PASSWORD: shopsecret # Default superadmin password for initial setup
+      NODE_ENV: development     # Set Node.js environment
+    volumes:
+      # Persistent storage for Vendure data (e.g., uploaded assets)
+      - vendure_data:/app/data
+    ports:
+      - "3000:3000" # Map host port 3000 to container port 3000 (Vendure API)
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: postgres:14-alpine # Using Alpine for a smaller image size
+    container_name: vendure_db
+    environment:
+      POSTGRES_DB: vendure
+      POSTGRES_USER: vendure
+      POSTGRES_PASSWORD: ${VENDURE_DB_PASSWORD} # Comes from the .env file
+    volumes:
+      - db_data:/var/lib/postgresql/data # Persistent storage for database files
+    restart: unless-stopped
+
+volumes:
+  vendure_data:
+  db_data:
