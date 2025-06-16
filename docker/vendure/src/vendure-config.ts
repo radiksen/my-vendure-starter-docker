@@ -1,9 +1,9 @@
-import { VendureConfig } from '@vendure/core';
+import { VendureConfig, DefaultSearchPlugin } from '@vendure/core'; // <-- ЭТА СТРОКА ДОЛЖНА БЫТЬ ТАК
 import { defaultEmailHandlers } from '@vendure/email-plugin';
 import { AssetServerPlugin } from '@vendure/asset-server-plugin';
-import { AdminUiPlugin } from '@vendure/admin-ui-plugin'; // Только один импорт AdminUiPlugin
-import * as path from 'path'; // Только один импорт path
-import 'dotenv/config'; // Только один импорт dotenv/config
+import { AdminUiPlugin } from '@vendure/admin-ui-plugin';
+// import * as path from 'path'; // <--- ЭТУ СТРОКУ НУЖНО УДАЛИТЬ, если 'path' больше нигде не используется
+import 'dotenv/config';
 
 export const config: VendureConfig = {
     apiOptions: {
@@ -38,19 +38,13 @@ export const config: VendureConfig = {
             route: 'assets',
             assetUploadDir: './assets',
         }),
-        
-       AdminUiPlugin.init({ // <--- ОБНОВЛЕННАЯ НАСТРОЙКА ADMINUIPLUGIN
-            route: 'admin', // URL-путь, по которому будет доступна админка (например, /admin)
-            port: 3002, // <--- ДОБАВЛЕННЫЙ ПОРТ. ОН ЯВНО ТРЕБУЕТСЯ.
+        AdminUiPlugin.init({
+            route: 'admin',
+            port: 3002,
         }),
-
-
-        //     handlers: defaultEmailHandlers,
-        //     outputPath: path.join(__dirname, '__generated__/email'), // Пример пути для вывода шаблонов
-        //     route: 'emails',
-        //     // options...
-        // }),
+        // <--- ИСПРАВЛЕННЫЙ ПЛАГИН ПОИСКА
+        DefaultSearchPlugin.init({ // <--- ЭТОТ БЛОК ДОЛЖЕН БЫТЬ ТАК
+            // Опции плагина (можно оставить пустыми для базовой настройки)
+        }),
     ],
-    // Дополнительные настройки Vendure (если npx @vendure/create добавил что-то еще,
-    // убедитесь, что это не дублирует вышеперечисленные секции)
 };
