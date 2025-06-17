@@ -171,10 +171,10 @@ Now that the files are generated, we'll configure them to work with our PostgreS
     # Build the Vendure project (TypeScript to JavaScript compilation)
     RUN npm run build
 
-    # Открываем порт, на котором работает Vendure API
+    # Open port for Vendure API
     EXPOSE 3000
 
-    # Команда по умолчанию для запуска Vendure API
+    # Default command for Vendure API
     CMD ["node", "dist/index.js"]
     ```
     * Save file: `Ctrl+O`, `Enter`.
