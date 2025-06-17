@@ -29,7 +29,7 @@ This repository provides a ready-to-deploy Docker Compose setup for the Vendure 
 
 ---
 
-## **2. Server Prerequisites**
+## **2. Prerequisites**
 
 Ensure your server (e.g., Ubuntu, Debian, CentOS) has the following:
 
@@ -53,7 +53,7 @@ Follow these steps to deploy Vendure on your server:
     # Clone the repository
     git clone [https://github.com/ВАШ_ЛОГИН/ВАШ_РЕПОЗИТОРИЙ.git](https://github.com/ВАШ_ЛОГИН/ВАШ_РЕПОЗИТОРИЙ.git) vendure-instance
     # IMPORTANT: Replace ВАШ_ЛОГИН with your GitHub username.
-    # IMPORTANT: Replace ВАШ_РЕПОЗИТООРЙ with your actual repository name (e.g., my-vendure-starter-docker).
+    # IMPORTANT: Replace ВАШ_РЕПОЗИТОРИЙ with your actual repository name (e.g., my-vendure-starter-docker).
     ```
 
 2.  **Navigate to the project directory:**
@@ -113,8 +113,7 @@ To stop and remove all running Docker containers, networks, and volumes for this
 
 ```bash
 docker-compose down --volumes
-
-## **6. Project Structure**
+6. Project Structure
 my-vendure-starter-docker/
 ├── .env.example             # Example environment variables
 ├── docker-compose.yml       # Defines Docker services (Vendure API, PostgreSQL)
@@ -126,13 +125,11 @@ my-vendure-starter-docker/
 │       └── src/                 # Vendure application source code
 │           └── vendure-config.ts # Main Vendure configuration file
 │           └── ... (other Vendure source files)
-
-
-##7. **Troubleshooting**
+7. Troubleshooting
 Error: Cannot connect to the Docker daemon: Ensure Docker Engine is running and your user is in the docker group.
 Network "..." needs to be recreated: Run docker-compose down --volumes first, then try ./start-vendure.sh again.
 Error: Vendure dev-setup (migrations/superuser) failed. in script output:
 This typically means Vendure or PostgreSQL were not fully ready. The script has a sleep 90 command. You can increase this value in start-vendure.sh (e.g., sleep 120 or 180).
 Check container logs for detailed errors: docker-compose logs vendure.
 404 Not Found for Admin UI: Ensure you are accessing http://YOUR_SERVER_IP_OR_DOMAIN:3000/admin. The Admin UI is loaded from a CDN. The Vendure API server is responsible for routing to it.
-"Connection refused" or browser timeout: Ensure port 3000 is open in your server's firewall.
+Connection refused or browser timeout: Ensure port 3000 is open in your server's firewall.
