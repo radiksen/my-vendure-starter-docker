@@ -1,4 +1,3 @@
-
 # Vendure Docker Starter with PostgreSQL
 
 ![Vendure Logo](https://vendure.io/logo.svg)
