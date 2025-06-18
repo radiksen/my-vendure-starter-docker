@@ -1,6 +1,7 @@
 # Vendure Docker Starter with PostgreSQL
 
 ![Vendure Logo](https://vendure.io/logo.svg)
+![Vendure Admin UI](https://github.com/radiksen/my-vendure-starter-docker/blob/main/Screenshot%202025-06-18%20095857.png?raw=true)
 
 This repository provides a ready-to-deploy Docker Compose setup for the Vendure e-commerce backend (API) with a PostgreSQL database. It's designed for simple setup on any Linux server with Docker.
 
